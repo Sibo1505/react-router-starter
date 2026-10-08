@@ -7,15 +7,17 @@ ENV PATH="$PNPM_HOME:$PATH"
 RUN corepack enable
 WORKDIR /app
 
-# All dependencies (incl. dev) needed for the build
+# All dependencies (incl. dev) needed for the build.
+# --ignore-scripts skips our own "prepare" script (git hooks are not needed in an image and
+# lefthook is a dev dependency); dependency build scripts are already blocked by pnpm by default.
 FROM base AS deps
 COPY package.json pnpm-lock.yaml ./
-RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
+RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile --ignore-scripts
 
 # Production dependencies only, for the final image
 FROM base AS prod-deps
 COPY package.json pnpm-lock.yaml ./
-RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile --prod
+RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile --prod --ignore-scripts
 
 # Build the app
 FROM deps AS build
