@@ -1,0 +1,61 @@
+// Renovate keeps npm packages, GitHub Actions and the Node.js/pnpm versions up to date.
+// Every update PR runs through the full CI, so broken updates cannot be merged.
+// Docs: https://docs.renovatebot.com/configuration-options/
+{
+  $schema: "https://docs.renovatebot.com/renovate-schema.json",
+  extends: [
+    // Sensible defaults: dependency dashboard issue, grouping of monorepo packages
+    // (e.g. all react-router packages in one PR), semantic commit messages.
+    "config:recommended",
+    // New GitHub Actions are pinned to full commit SHAs as well (supply-chain security).
+    "helpers:pinGitHubActionDigests",
+    // Updates are tooling changes: "chore", never "feat"/"fix" (those are for user-facing changes).
+    ":semanticCommitTypeAll(chore)",
+  ],
+
+  timezone: "Europe/Berlin",
+  // Batch updates once a week instead of a constant trickle of PRs.
+  schedule: ["before 6am on monday"],
+
+  // Supply-chain protection: only update to releases that are at least 3 days old.
+  // Most compromised packages are detected and unpublished within that time.
+  minimumReleaseAge: "3 days",
+  // Do not open a PR at all until the release is old enough.
+  internalChecksFilter: "strict",
+
+  // Security fixes from the OSV database are opened immediately, outside the schedule.
+  osvVulnerabilityAlerts: true,
+
+  // Weekly refresh of transitive dependencies in pnpm-lock.yaml.
+  lockFileMaintenance: { enabled: true },
+
+  packageRules: [
+    {
+      description: "One PR for all minor and patch updates of npm packages.",
+      matchManagers: ["npm"],
+      matchUpdateTypes: ["minor", "patch"],
+      // 0.x versions may break on any minor bump, so they stay separate.
+      matchCurrentVersion: "!/^0/",
+      groupName: "all non-major dependencies",
+      groupSlug: "all-minor-patch",
+    },
+    {
+      description: "One PR for all GitHub Actions updates, with the 'ci' commit type.",
+      matchManagers: ["github-actions"],
+      groupName: "github actions",
+      semanticCommitType: "ci",
+    },
+    {
+      description: "Node.js majors are a deliberate upgrade: the runtime (.nvmrc, Dockerfile) and @types/node move together, and only after approval on the dependency dashboard.",
+      matchPackageNames: ["node", "@types/node"],
+      matchUpdateTypes: ["major"],
+      groupName: "node.js major",
+      dependencyDashboardApproval: true,
+    },
+    {
+      description: "Exact-pinned on purpose (see package.json); updated deliberately.",
+      matchPackageNames: ["@playwright/mcp"],
+      enabled: false,
+    },
+  ],
+}
