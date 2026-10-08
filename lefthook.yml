@@ -1,0 +1,31 @@
+# Git hooks, managed by lefthook. Installed automatically via the "prepare" script.
+# Docs: https://lefthook.dev
+
+# Fast checks on staged files only, so committing stays quick.
+pre-commit:
+  parallel: true
+  jobs:
+    - name: format
+      glob: "*.{js,mjs,cjs,ts,tsx,json,jsonc,css,md,yml,yaml}"
+      run: pnpm exec oxfmt --no-error-on-unmatched-pattern {staged_files}
+      # Re-add files the formatter changed, so the fixed version gets committed.
+      stage_fixed: true
+
+    - name: lint
+      glob: "*.{js,mjs,cjs,ts,tsx}"
+      run: pnpm exec oxlint {staged_files}
+
+# Enforce Conventional Commits (e.g. "feat: ...", "fix: ...", "chore: ...").
+commit-msg:
+  jobs:
+    - name: commitlint
+      run: pnpm exec commitlint --edit {1}
+
+# Full project check before code leaves the machine (type check and tests included).
+pre-push:
+  jobs:
+    - name: check
+      run: pnpm check
+
+    - name: test
+      run: pnpm test

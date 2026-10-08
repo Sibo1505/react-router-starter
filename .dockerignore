@@ -1,0 +1,12 @@
+.git
+.github
+.agents
+.react-router
+build
+node_modules
+.env*
+*.md
+test-results
+playwright-report
+blob-report
+.playwright-mcp

@@ -1,0 +1,32 @@
+# Keeps dependencies and GitHub Actions up to date with weekly, grouped pull requests.
+# Every update PR runs through the full CI, so broken updates cannot be merged.
+version: 2
+
+updates:
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+    open-pull-requests-limit: 5
+    commit-message:
+      prefix: chore
+      include: scope
+    groups:
+      # One PR for all minor/patch updates instead of one per package.
+      minor-and-patch:
+        update-types: [minor, patch]
+    # Exact-pinned on purpose (see package.json); update these deliberately.
+    ignore:
+      - dependency-name: "@playwright/mcp"
+
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+    commit-message:
+      prefix: ci
+    groups:
+      actions:
+        patterns: ["*"]

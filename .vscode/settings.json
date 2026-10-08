@@ -1,0 +1,29 @@
+{
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "oxc.oxc-vscode",
+  "editor.codeActionsOnSave": {
+    "source.fixAll.oxc": "explicit"
+  },
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "typescript.enablePromptUseWorkspaceTsdk": true,
+  "files.associations": {
+    "*.css": "tailwindcss"
+  },
+  "github.copilot.chat.commitMessageGeneration.instructions": [
+    {
+      "text": "Follow Conventional Commits, validated by commitlint (@commitlint/config-conventional). Write in English."
+    },
+    {
+      "text": "Header format: '<type>: <subject>' or '<type>(<scope>): <subject>'. Max 72 characters. Lowercase type, imperative mood ('add', not 'added'), no trailing period."
+    },
+    {
+      "text": "Allowed types: feat, fix, docs, style, refactor, perf, test, build, ci, chore, revert."
+    },
+    {
+      "text": "Choosing the type: 'feat' ONLY for new user-facing website functionality and 'fix' ONLY for user-facing bug fixes. Tooling, config, dependencies, git hooks, editor settings, linting and formatting setup are 'chore' (or 'build' for build/bundler changes, 'ci' for GitHub Actions). Tests are 'test', README/docs are 'docs'."
+    },
+    {
+      "text": "Body is optional. If present: one blank line after the header, short bullet points starting with '- ', and EVERY body line must be at most 100 characters; wrap longer bullets onto the next line."
+    }
+  ]
+}

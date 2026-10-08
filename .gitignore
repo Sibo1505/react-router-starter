@@ -1,0 +1,23 @@
+.DS_Store
+node_modules/
+
+# Environment variables – never commit these
+.env
+.env.*
+!.env.example
+
+# React Router
+/.react-router/
+/build/
+
+# Playwright E2E test results and reports
+/test-results/
+/playwright-report/
+/blob-report/
+
+# Screenshots and traces from the Playwright MCP server
+/.playwright-mcp/
+
+# Editor / OS files
+.idea/
+Thumbs.db

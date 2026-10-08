@@ -1,0 +1,28 @@
+{
+  "meta": {
+    "home": {
+      "title": "My App",
+      "description": "A new React Router app."
+    },
+    "notFound": {
+      "title": "Page not found – My App"
+    }
+  },
+  "home": {
+    "heading": "Welcome",
+    "intro": "This app was created from the react-router-starter."
+  },
+  "notFound": {
+    "heading": "Page not found",
+    "text": "The page you are looking for does not exist or has been moved.",
+    "backHome": "Back to home"
+  },
+  "error": {
+    "heading": "Error",
+    "text": "An unexpected error occurred."
+  },
+  "languageSwitcher": {
+    "label": "Deutsch",
+    "ariaLabel": "View this page in German"
+  }
+}

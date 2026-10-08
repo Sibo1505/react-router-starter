@@ -1,0 +1,28 @@
+{
+  "meta": {
+    "home": {
+      "title": "My App",
+      "description": "Eine neue React-Router-App."
+    },
+    "notFound": {
+      "title": "Seite nicht gefunden – My App"
+    }
+  },
+  "home": {
+    "heading": "Willkommen",
+    "intro": "Diese App wurde aus dem react-router-starter erstellt."
+  },
+  "notFound": {
+    "heading": "Seite nicht gefunden",
+    "text": "Die Seite, die du suchst, existiert nicht oder wurde verschoben.",
+    "backHome": "Zur Startseite"
+  },
+  "error": {
+    "heading": "Fehler",
+    "text": "Es ist ein unerwarteter Fehler aufgetreten."
+  },
+  "languageSwitcher": {
+    "label": "English",
+    "ariaLabel": "Seite auf Englisch anzeigen"
+  }
+}
