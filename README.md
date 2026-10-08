@@ -14,7 +14,7 @@ TypeScript. Strict by default, tested in a real browser, ready for CI and Docker
 | Code quality | Oxfmt (formatting), Oxlint (type-aware linting, a11y, React hooks)                |
 | Tests        | Vitest + Testing Library (unit), Playwright + axe-core (E2E + WCAG 2.2 AA)        |
 | Git workflow | lefthook hooks, commitlint (Conventional Commits), Copilot commit message rules   |
-| CI           | GitHub Actions (check, test, build, E2E), PR title check, Dependabot              |
+| CI           | GitHub Actions (check, test, build, E2E), PR title check, Renovate                |
 | Deployment   | Multi-stage Dockerfile, non-root runtime                                          |
 | AI tooling   | Playwright MCP server (`.mcp.json`) for agent-driven browser testing              |
 
@@ -51,6 +51,11 @@ Alternatively click **Use this template** on GitHub.
 - [ ] **Require a pull request before merging**, 0 approvals, merge method **Squash** only
 - [ ] **Require status checks to pass** + up to date: `Lint, typecheck, test, build`,
       `E2E tests`, `Validate PR title`
+
+**Renovate** (dependency updates, configured in `.github/renovate.json5`)
+
+- [ ] Install the [Renovate GitHub App](https://github.com/apps/renovate) for the new repository
+- [ ] Keep **Issues** enabled: Renovate lists all pending updates in a "Dependency Dashboard" issue
 
 ## Scripts
 
@@ -96,6 +101,17 @@ test/             unit test setup and helpers
   must follow [Conventional Commits](https://www.conventionalcommits.org) (`feat: …`, `fix: …`).
 - Hooks: `pre-commit` formats and lints staged files, `commit-msg` runs commitlint,
   `pre-push` runs `pnpm check` and unit tests.
+
+## Dependency updates
+
+[Renovate](https://docs.renovatebot.com) opens update PRs every Monday morning; merge them once CI
+is green.
+
+- Minor and patch updates of npm packages come as one grouped PR, GitHub Actions as another.
+- Major updates come as separate PRs, so breaking changes can be reviewed one at a time.
+- Releases must be at least 3 days old before Renovate proposes them (supply-chain protection).
+- Node.js major upgrades (`.nvmrc`, `Dockerfile`, `@types/node`) are only opened after ticking
+  them in the **Dependency Dashboard** issue.
 
 ## License
 
