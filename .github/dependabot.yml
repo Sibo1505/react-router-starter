@@ -16,9 +16,13 @@ updates:
       # One PR for all minor/patch updates instead of one per package.
       minor-and-patch:
         update-types: [minor, patch]
-    # Exact-pinned on purpose (see package.json); update these deliberately.
     ignore:
+      # Exact-pinned on purpose (see package.json); update these deliberately.
       - dependency-name: "@playwright/mcp"
+      # Node type definitions must match the Node version we run (.nvmrc, Dockerfile).
+      # Major bumps happen together with a deliberate Node upgrade, not automatically.
+      - dependency-name: "@types/node"
+        update-types: ["version-update:semver-major"]
 
   - package-ecosystem: github-actions
     directory: /
